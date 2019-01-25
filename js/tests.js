@@ -2,60 +2,96 @@ var expect = chai.expect;
 
 describe('Restaurant', function() {
     describe('Reservar Horario', function() {
-        it('Ingresa horario no existente. No hace nada. Total de horarios: 3.', function() {
-            aplicacion.listado.restaurantes[0].reservarHorario("12:00");
-            expect(aplicacion.listado.restaurantes[0].horarios.length).to.equal(3);
+        var newRest = new Restaurant(100,'Test','','',["13:00", "15:30", "18:00"],'',[]);
+        var initCount = newRest.horarios.length;
+        var initArray = newRest.horarios;
+
+        it('Ingresa horario no existente. No hace nada - Total de horarios: Cantidad Inicial. El array de horarios no cambia.', function() {
+            newRest.reservarHorario("12:00");
+            expect(newRest.horarios.length).to.equal(initCount);
+            expect(newRest.horarios).to.equal(initArray);
         });
-        it('Ingresa cualquier string. No hace nada. Total de horarios: 3.', function() {
-            aplicacion.listado.restaurantes[0].reservarHorario("bla");
-            expect(aplicacion.listado.restaurantes[0].horarios.length).to.equal(3);
+        it('Ingresa cualquier string. No hace nada - Total de horarios: Cantidad Inicial. El array de horarios no cambia.', function() {
+            newRest.reservarHorario("bla");
+            expect(newRest.horarios.length).to.equal(initCount);
+            expect(newRest.horarios).to.equal(initArray);
         });
-        it('No ingresa nada. No hace nada. Total de horarios: 3.', function() {
-            aplicacion.listado.restaurantes[0].reservarHorario();
-            expect(aplicacion.listado.restaurantes[0].horarios.length).to.equal(3);
+        newRest.reservarHorario();
+        it('No ingresa nada. No hace nada - Total de horarios: Cantidad Inicial. El array de horarios no cambia.', function() {
+            expect(newRest.horarios.length).to.equal(initCount);
+            expect(newRest.horarios).to.equal(initArray);
         });
-        it('Ingresa horario existente. Lo elimna del array. Total de horarios: 2.', function() {
-            aplicacion.listado.restaurantes[0].reservarHorario("13:00");
-            expect(aplicacion.listado.restaurantes[0].horarios.length).to.equal(2);
+        it('Ingresa horario existente. Lo elimna del array - Total de horarios: Cantidad Inicial - 1.', function() {
+            newRest.reservarHorario("13:00");
+            expect(newRest.horarios.length).to.equal(initCount -1);
+        });
+    });
+
+    describe('Obtener Puntuacion', function() {
+        it('No hay puntuaciones en el restaurante. Promedio: 0.', function() {
+            var newRest = new Restaurant(100,'Test','','',[],'',[])
+            expect(newRest.obtenerPuntuacion()).to.equal(0);
+        });
+        it('Puntuaciones del Restaurant: 4, 5, 6. Promedio: 5.', function() {
+            var newRest = new Restaurant(100,'Test','','','','',[4, 5, 6]);
+            expect(newRest.obtenerPuntuacion()).to.equal(5);
+        });
+        it('Puntuaciones del Restaurant: 4, 4, 5. Promedio: 4.3.', function() {
+            var newRest = new Restaurant(100,'Test','','','','',[4, 4, 5]);
+            expect(newRest.obtenerPuntuacion()).to.equal(4.3);
+        });
+        it('Puntuaciones del Restaurant: 5. Promedio: 5.', function() {
+            var newRest = new Restaurant(100,'Test','','','','',[5]);
+            expect(newRest.obtenerPuntuacion()).to.equal(5);
         });
     });
 
     describe('Calificar', function() {
-        it('No ingresa nada. No hace nada. Total de Calificaciones: 5.', function() {
-            aplicacion.listado.restaurantes[0].calificar();
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(5);
+        var newRest = new Restaurant(100,'Test','','',[],'',[3, 8, 9]);
+        var initCount = newRest.calificaciones.length;
+        var initArray = newRest.calificaciones;
+
+        it('No ingresa nada. No hace nada - Total de Calificaciones: Cantidad Inicial. El array de calificaciones no cambia.', function() {
+            newRest.calificar();
+            expect(newRest.calificaciones.length).to.equal(initCount);
+            expect(newRest.calificaciones).to.equal(initArray);
         });
-        it('Ingresa un string. No hace nada. Total de Calificaciones: 5.', function() {
-            aplicacion.listado.restaurantes[0].calificar("bla");
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(5);
+        it('Ingresa un string. No hace nada - Total de Calificaciones: Cantidad Inicial. El array de calificaciones no cambia.', function() {
+            newRest.calificar("bla");
+            expect(newRest.calificaciones.length).to.equal(initCount);
+            expect(newRest.calificaciones).to.equal(initArray);
         });
-        it('Ingresa un numero <= 0. No hace nada. Total de Calificaciones: 5.', function() {
-            aplicacion.listado.restaurantes[0].calificar(-2);
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(5);
+        it('Ingresa un numero <= 0. No lo agrega - Total de Calificaciones: Cantidad Inicial. El array de calificaciones no cambia.', function() {
+            newRest.calificar(-2);
+            expect(newRest.calificaciones.length).to.equal(initCount);
+            expect(newRest.calificaciones).to.equal(initArray);
         });
-        it('Ingresa un numero >= 10. No hace nada. Total de Calificaciones: 5.', function() {
-            aplicacion.listado.restaurantes[0].calificar(12);
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(5);
+        it('Ingresa un numero >= 10. No lo agrega - Total de Calificaciones: Cantidad Inicial. El array de calificaciones no cambia.', function() {
+            newRest.calificar(12);
+            expect(newRest.calificaciones.length).to.equal(initCount);
+            expect(newRest.calificaciones).to.equal(initArray);
         });
-        it('Ingresa el numero 0. No lo agrega. Total de Calificaciones: 5.', function() {
-            aplicacion.listado.restaurantes[0].calificar(0);
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(5);
+        it('Ingresa el numero 0. No lo agrega - Total de Calificaciones: Cantidad Inicial. El array de calificaciones no cambia.', function() {
+            newRest.calificar(0);
+            expect(newRest.calificaciones.length).to.equal(initCount);
+            expect(newRest.calificaciones).to.equal(initArray);
         });
-        it('Ingresa el numero 10. No lo agrega. Total de Calificaciones: 5.', function() {
-            aplicacion.listado.restaurantes[0].calificar(10);
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(5);
+        it('Ingresa el numero 10. No lo agrega - Total de Calificaciones: Cantidad Inicial. El array de calificaciones no cambia.', function() {
+            newRest.calificar(10);
+            expect(newRest.calificaciones.length).to.equal(initCount);
+            expect(newRest.calificaciones).to.equal(initArray);
         });
-        it('Ingresa el numero 1. Lo agrega. Total de Calificaciones: 6.', function() {
-            aplicacion.listado.restaurantes[0].calificar(1);
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(6);
+        it('Ingresa el numero 1. Lo agrega - Total de Calificaciones: Cantidad Inicial + 1.', function() {
+            newRest.calificar(1);
+            expect(newRest.calificaciones.length).to.equal(initCount +1);
         });
-        it('Ingresa el numero 9. Lo agrega. Total de Calificaciones: 7.', function() {
-            aplicacion.listado.restaurantes[0].calificar(9);
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(7);
+        it('Ingresa el numero 9. Lo agrega - Total de Calificaciones: Cantidad Inicial + 2.', function() {
+            newRest.calificar(9);
+            expect(newRest.calificaciones.length).to.equal(initCount +2);
         });
-        it('Ingresa un numero entre 1 y 9. Lo agrega. Total de Calificaciones: 8.', function() {
-            aplicacion.listado.restaurantes[0].calificar(5);
-            expect(aplicacion.listado.restaurantes[0].calificaciones.length).to.equal(8);
+        it('Ingresa un numero entre 1 y 9. Lo agrega - Total de Calificaciones: Cantidad Inicial + 3.', function() {
+            newRest.calificar(5);
+            expect(newRest.calificaciones.length).to.equal(initCount +3);
         });
     });
 });
