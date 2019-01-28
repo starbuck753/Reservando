@@ -1,8 +1,17 @@
 var expect = chai.expect;
 
+var newRests = [
+    new Restaurant(101,'Test1','Rubro 4','Ciudad 2',["13:00", "15:30", "18:00"],'',[]),
+    new Restaurant(102,'Test2','Rubro 2','Ciudad 1',["12:00", "15:00", "18:30"],'',[4, 5, 6]),
+    new Restaurant(103,'Test3','Rubro 4','Ciudad 3',[],'',[4, 4, 5]),
+    new Restaurant(104,'Test4','Rubro 1','Ciudad 1',["13:00", "15:00", "18:00"],'',[5]),
+    new Restaurant(105,'Test5','Rubro 5','Ciudad 5',["12:00", "15:30", "19:00"],'',[3, 8, 9])
+];
+var newList = new Listado(newRests); 
+
 describe('Restaurant', function() {
     describe('Reservar Horario', function() {
-        var newRest = new Restaurant(100,'Test','','',["13:00", "15:30", "18:00"],'',[]);
+        var newRest = newRests[0];
         var initCount = newRest.horarios.length;
         var initArray = newRest.horarios;
 
@@ -29,25 +38,25 @@ describe('Restaurant', function() {
 
     describe('Obtener Puntuacion', function() {
         it('No hay puntuaciones en el restaurante - Promedio: 0.', function() {
-            var newRest = new Restaurant(100,'Test','','',[],'',[])
+            var newRest = newRests[0];
             expect(newRest.obtenerPuntuacion()).to.equal(0);
         });
         it('Puntuaciones del Restaurant: 4, 5, 6 - Promedio: 5.', function() {
-            var newRest = new Restaurant(100,'Test','','',[],'',[4, 5, 6]);
+            var newRest = newRests[1];
             expect(newRest.obtenerPuntuacion()).to.equal(5);
         });
         it('Puntuaciones del Restaurant: 4, 4, 5 - Promedio: 4.3.', function() {
-            var newRest = new Restaurant(100,'Test','','',[],'',[4, 4, 5]);
+            var newRest = newRests[2];
             expect(newRest.obtenerPuntuacion()).to.equal(4.3);
         });
         it('Puntuaciones del Restaurant: 5 - Promedio: 5.', function() {
-            var newRest = new Restaurant(100,'Test','','',[],'',[5]);
+            var newRest = newRests[3];
             expect(newRest.obtenerPuntuacion()).to.equal(5);
         });
     });
 
     describe('Calificar', function() {
-        var newRest = new Restaurant(100,'Test','','',[],'',[3, 8, 9]);
+        var newRest = newRests[4];
         var initCount = newRest.calificaciones.length;
         var initArray = newRest.calificaciones;
 
@@ -98,15 +107,6 @@ describe('Restaurant', function() {
 
 
 describe('Listado', function() {
-    var newRests = [
-        new Restaurant(101,'Test1','Rubro 4','Ciudad 2',["12:00", "15:30", "18:00"],'',[]),
-        new Restaurant(102,'Test2','Rubro 2','Ciudad 1',["13:00", "15:00", "18:30"],'',[]),
-        new Restaurant(103,'Test3','Rubro 4','Ciudad 3',["12:00", "15:30", "18:30"],'',[]),
-        new Restaurant(104,'Test4','Rubro 1','Ciudad 1',["13:00", "15:00", "18:00"],'',[]),
-        new Restaurant(105,'Test5','Rubro 5','Ciudad 5',["12:00", "15:30", "19:00"],'',[])
-    ];
-    var newList = new Listado(newRests); 
-
     describe('Buscar Restaurante - Id Validos entre 101 y 105', function() {
         it('Ingresa un Id valido: 102. Devuelve el objeto correcto - Nombre: Test2.', function() {
             expect(newList.buscarRestaurante(102)).to.include({nombre: 'Test2'});
