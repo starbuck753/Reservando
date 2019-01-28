@@ -3,7 +3,7 @@ var expect = chai.expect;
 var newRests = [
     new Restaurant(101,'Test1','Rubro 4','Ciudad 2',["13:00", "15:30", "18:00"],'',[]),
     new Restaurant(102,'Test2','Rubro 2','Ciudad 1',["12:00", "15:00", "18:30"],'',[4, 5, 6]),
-    new Restaurant(103,'Test3','Rubro 4','Ciudad 3',[],'',[4, 4, 5]),
+    new Restaurant(103,'Test3','Rubro 4','Ciudad 3',["13:00", "15:30", "18:30"],'',[4, 4, 5]),
     new Restaurant(104,'Test4','Rubro 1','Ciudad 1',["13:00", "15:00", "18:00"],'',[5]),
     new Restaurant(105,'Test5','Rubro 5','Ciudad 5',["12:00", "15:30", "19:00"],'',[3, 8, 9])
 ];
