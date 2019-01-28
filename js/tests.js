@@ -28,20 +28,20 @@ describe('Restaurant', function() {
     });
 
     describe('Obtener Puntuacion', function() {
-        it('No hay puntuaciones en el restaurante. Promedio: 0.', function() {
+        it('No hay puntuaciones en el restaurante - Promedio: 0.', function() {
             var newRest = new Restaurant(100,'Test','','',[],'',[])
             expect(newRest.obtenerPuntuacion()).to.equal(0);
         });
-        it('Puntuaciones del Restaurant: 4, 5, 6. Promedio: 5.', function() {
-            var newRest = new Restaurant(100,'Test','','','','',[4, 5, 6]);
+        it('Puntuaciones del Restaurant: 4, 5, 6 - Promedio: 5.', function() {
+            var newRest = new Restaurant(100,'Test','','',[],'',[4, 5, 6]);
             expect(newRest.obtenerPuntuacion()).to.equal(5);
         });
-        it('Puntuaciones del Restaurant: 4, 4, 5. Promedio: 4.3.', function() {
-            var newRest = new Restaurant(100,'Test','','','','',[4, 4, 5]);
+        it('Puntuaciones del Restaurant: 4, 4, 5 - Promedio: 4.3.', function() {
+            var newRest = new Restaurant(100,'Test','','',[],'',[4, 4, 5]);
             expect(newRest.obtenerPuntuacion()).to.equal(4.3);
         });
-        it('Puntuaciones del Restaurant: 5. Promedio: 5.', function() {
-            var newRest = new Restaurant(100,'Test','','','','',[5]);
+        it('Puntuaciones del Restaurant: 5 - Promedio: 5.', function() {
+            var newRest = new Restaurant(100,'Test','','',[],'',[5]);
             expect(newRest.obtenerPuntuacion()).to.equal(5);
         });
     });
@@ -96,3 +96,42 @@ describe('Restaurant', function() {
     });
 });
 
+
+describe('Listado', function() {
+    var newRests = [
+        new Restaurant(101,'Test1','Rubro 4','Ciudad 2',["12:00", "15:30", "18:00"],'',[]),
+        new Restaurant(102,'Test2','Rubro 2','Ciudad 1',["13:00", "15:00", "18:30"],'',[]),
+        new Restaurant(103,'Test3','Rubro 4','Ciudad 3',["12:00", "15:30", "18:30"],'',[]),
+        new Restaurant(104,'Test4','Rubro 1','Ciudad 1',["13:00", "15:00", "18:00"],'',[]),
+        new Restaurant(105,'Test5','Rubro 5','Ciudad 5',["12:00", "15:30", "19:00"],'',[])
+    ];
+    var newList = new Listado(newRests); 
+
+    describe('Buscar Restaurante - Id Validos entre 101 y 105', function() {
+        it('Ingresa un Id valido: 102. Devuelve el objeto correcto - Nombre: Test2.', function() {
+            expect(newList.buscarRestaurante(102)).to.include({nombre: 'Test2'});
+        });
+        it('Ingresa un Id NO valido: 10. Devuelve mensaje - Mensaje: "No se ha encontrado ningún restaurant".', function() {
+            expect(newList.buscarRestaurante(10)).to.equal('No se ha encontrado ningún restaurant');
+        });
+    });
+
+    describe('Obener Ciudades sin repetidos y ordenadas', function() {
+        it('Valores a obtener: Ciudad 1, Ciudad 2, Ciudad 3, Ciudad 5', function() {
+            expect(newList.obtC()).to.eql(['Ciudad 1','Ciudad 2','Ciudad 3','Ciudad 5']);
+        });
+    });    
+
+    describe('Obener Rubros sin repetidos y ordenados', function() {
+        it('Valores a obtener: Rubro 1, Rubro 2, Rubro 4, Rubro 5', function() {
+            expect(newList.obtR()).to.eql(['Rubro 1','Rubro 2','Rubro 4','Rubro 5']);
+        });
+    });
+
+    describe('Obener Horarios sin repetidos y ordenados', function() {
+        it('Valores a obtener: 12:00, 13:00, 15:00, 15:30, 18:00, 18:30, 19:00', function() {
+            expect(newList.obtH()).to.eql(['12:00','13:00','15:00','15:30','18:00','18:30','19:00']);
+        });
+    });
+
+});
