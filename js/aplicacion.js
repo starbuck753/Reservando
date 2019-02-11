@@ -213,4 +213,23 @@ Aplicacion.prototype.filtrarRestaurantes = function() {
     this.dibujarListado(restaurantesFiltrados);
 }
 
+
+
+function sumatoria(numeros) {
+    var sumatoria = 0;
+    for (var i = 0; i < numeros.length; i++) {
+        sumatoria += numeros[i]
+    }
+    return sumatoria;
+}
+
+function promedio(numeros) {
+    var promedio = sumatoria(numeros) / numeros.length;
+    return Math.round(promedio * 10) / 10
+}
+
+function filtrarElementos(elem, index, self) {
+    return index === self.indexOf(elem);
+}
+
 var aplicacion = new Aplicacion(listado);
