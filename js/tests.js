@@ -156,9 +156,9 @@ describe('Listado', function() {
 });
 
 /*
-describe('Listado', function() {
-    describe('Buscar Restaurante - Id Validos entre 101 y 105', function() {
-        it('Ingresa un Id valido: 102. Devuelve el objeto correcto - Nombre: Test2.', function() {
+describe('Reserva', function() {
+    describe('Calcular Precio Base: Cant. de personas * precio por persona.', function() {
+        it('Cant de Personas: 2, Precio: 10. Devuelve: 20.', function() {
             expect(newList.buscarRestaurante(102)).to.include({nombre: 'Test2'});
         });
         it('Ingresa un Id NO valido: 10. Devuelve mensaje - Mensaje: "No se ha encontrado ningún restaurant".', function() {
