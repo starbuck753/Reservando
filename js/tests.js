@@ -155,15 +155,199 @@ describe('Listado', function() {
     });
 });
 
-/*
+
 describe('Reserva', function() {
-    describe('Calcular Precio Base: Cant. de personas * precio por persona.', function() {
-        it('Cant de Personas: 2, Precio: 10. Devuelve: 20.', function() {
-            expect(newList.buscarRestaurante(102)).to.include({nombre: 'Test2'});
+    describe('Calcular Precio Base y Final.', function() {
+        var newReserva1 = new Reserva(new Date(2019, 2, 11, 11, 00), 2, 400, "DES15");
+        it('Cant de Personas: 2, Precio: 400. Dto: DES15. Precio Base: 800.', function() {
+            expect(newReserva1.calcularPrecioBase()).to.equal(800);
         });
-        it('Ingresa un Id NO valido: 10. Devuelve mensaje - Mensaje: "No se ha encontrado ningún restaurant".', function() {
-            expect(newList.buscarRestaurante(10)).to.equal('No se ha encontrado ningún restaurant');
+        it('Cant de Personas: 2, Precio: 400. Dto: DES15. Precio Final: 680.', function() {
+            expect(newReserva1.calcularPrecioFinal()).to.equal(680);
+        });    
+        var newReserva2 = new Reserva(new Date(2019, 2, 11, 11, 00), 2, 400, "DES200");
+        it('Cant de Personas: 2, Precio: 400. Dto: DES200. Precio Base: 800.', function() {
+            expect(newReserva2.calcularPrecioBase()).to.equal(800);
         });
+        it('Cant de Personas: 2, Precio: 400. Dto: DES200. Precio Final: 600.', function() {
+            expect(newReserva2.calcularPrecioFinal()).to.equal(600);
+        });
+        var newReserva3 = new Reserva(new Date(2019, 2, 11, 11, 00), 2, 400, "DES1");
+        it('Cant de Personas: 2, Precio: 400. Dto: DES1. Precio Base: 800.', function() {
+            expect(newReserva3.calcularPrecioBase()).to.equal(800);
+        });
+        it('Cant de Personas: 2, Precio: 400. Dto: DES1. Precio Final: 400.', function() {
+            expect(newReserva3.calcularPrecioFinal()).to.equal(400);
+        });    
+    });    
+
+    describe('Calcular Precio Base y Final. Dtos por grupos grandes (5 personas: 5% dto).', function() {
+        var newReserva1 = new Reserva(new Date(2019, 2, 11, 11, 00), 5, 400, "DES15");
+        it('Cant de Personas: 5, Precio: 400. Dto: DES15. Precio Base: 2000.', function() {
+            expect(newReserva1.calcularPrecioBase()).to.equal(2000);
+        });
+        it('Cant de Personas: 5, Precio: 400. Dto: DES15. Precio Final: 1600.', function() {
+            expect(newReserva1.calcularPrecioFinal()).to.equal(1600);
+        });    
+
+        var newReserva2 = new Reserva(new Date(2019, 2, 11, 11, 00), 5, 400, "DES200");
+        it('Cant de Personas: 5, Precio: 400. Dto: DES200. Precio Base: 2000.', function() {
+            expect(newReserva2.calcularPrecioBase()).to.equal(2000);
+        });
+        it('Cant de Personas: 5, Precio: 400. Dto: DES200. Precio Final:1700.', function() {
+            expect(newReserva2.calcularPrecioFinal()).to.equal(1700);
+        });
+
+        var newReserva3 = new Reserva(new Date(2019, 2, 11, 11, 00), 5, 400, "DES1");
+        it('Cant de Personas: 5, Precio: 400. Dto: DES1. Devuelve: 2000.', function() {
+            expect(newReserva3.calcularPrecioBase()).to.equal(2000);
+        });
+        it('Cant de Personas: 5, Precio: 400. Dto: DES1. Devuelve: 1500.', function() {
+            expect(newReserva3.calcularPrecioFinal()).to.equal(1500);
+        });  
+
+        var newReserva4 = new Reserva(new Date(2019, 2, 11, 11, 00), 5, 400, null);
+        it('Cant de Personas: 5, Precio: 400. Dto: null. Devuelve: 2000.', function() {
+            expect(newReserva4.calcularPrecioBase()).to.equal(2000);
+        });
+        it('Cant de Personas: 5, Precio: 400. Dto: null. Devuelve: 1900.', function() {
+            expect(newReserva4.calcularPrecioFinal()).to.equal(1900);
+        });  
+    });
+
+    describe('Calcular Precio Base y Final. Dtos por grupos grandes (7 personas: 10% dto).', function() {
+        var newReserva1 = new Reserva(new Date(2019, 2, 11, 11, 00), 7, 400, "DES15");
+        it('Cant de Personas: 7, Precio: 400. Dto: DES15. Precio Base: 2800.', function() {
+            expect(newReserva1.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: DES15. Precio Final: 2100.', function() {
+            expect(newReserva1.calcularPrecioFinal()).to.equal(2100);
+        });    
+
+        var newReserva2 = new Reserva(new Date(2019, 2, 11, 11, 00), 7, 400, "DES200");
+        it('Cant de Personas: 7, Precio: 400. Dto: DES200. Precio Base: 2800.', function() {
+            expect(newReserva2.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: DES200. Precio Final: 2320.', function() {
+            expect(newReserva2.calcularPrecioFinal()).to.equal(2320);
+        });
+
+        var newReserva3 = new Reserva(new Date(2019, 2, 11, 11, 00), 7, 400, "DES1");
+        it('Cant de Personas: 7, Precio: 400. Dto: DES1. Devuelve: 2800.', function() {
+            expect(newReserva3.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: DES1. Devuelve: 2120.', function() {
+            expect(newReserva3.calcularPrecioFinal()).to.equal(2120);
+        });  
+
+        var newReserva4 = new Reserva(new Date(2019, 2, 11, 11, 00), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Devuelve: 2800.', function() {
+            expect(newReserva4.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Devuelve: 2520.', function() {
+            expect(newReserva4.calcularPrecioFinal()).to.equal(2520);
+        });  
+    });
+
+    describe('Calcular Precio Base y Final. Dtos por grupos grandes (mas de 8 personas: 15% dto).', function() {
+        var newReserva1 = new Reserva(new Date(2019, 2, 11, 11, 00), 9, 300, "DES15");
+        it('Cant de Personas: 9, Precio: 300. Dto: DES15. Precio Base: 2700.', function() {
+            expect(newReserva1.calcularPrecioBase()).to.equal(2700);
+        });
+        it('Cant de Personas: 9, Precio: 300. Dto: DES15. Precio Final: 1890.', function() {
+            expect(newReserva1.calcularPrecioFinal()).to.equal(1890);
+        });    
+
+        var newReserva2 = new Reserva(new Date(2019, 2, 11, 11, 00), 9, 300, "DES200");
+        it('Cant de Personas: 9, Precio: 300. Dto: DES200. Precio Base: 2700.', function() {
+            expect(newReserva2.calcularPrecioBase()).to.equal(2700);
+        });
+        it('Cant de Personas: 9, Precio: 300. Dto: DES200. Precio Final: 2095.', function() {
+            expect(newReserva2.calcularPrecioFinal()).to.equal(2095);
+        });
+
+        var newReserva3 = new Reserva(new Date(2019, 2, 11, 11, 00), 9, 300, "DES1");
+        it('Cant de Personas: 9, Precio: 300. Dto: DES1. Devuelve: 2700.', function() {
+            expect(newReserva3.calcularPrecioBase()).to.equal(2700);
+        });
+        it('Cant de Personas: 9, Precio: 300. Dto: DES1. Devuelve: 1995.', function() {
+            expect(newReserva3.calcularPrecioFinal()).to.equal(1995);
+        });  
+
+        var newReserva4 = new Reserva(new Date(2019, 2, 11, 11, 00), 9, 300, null);
+        it('Cant de Personas: 9, Precio: 300. Dto: null. Devuelve: 2700.', function() {
+            expect(newReserva4.calcularPrecioBase()).to.equal(2700);
+        });
+        it('Cant de Personas: 9, Precio: 300. Dto: null. Devuelve: 2295.', function() {
+            expect(newReserva4.calcularPrecioFinal()).to.equal(2295);
+        });  
+    });
+
+    describe('Calcular Precio Base y Final. Dtos por grupos grandes (7 personas: 10% dto) mas Adicionales.', function() {
+        var newReserva1 = new Reserva(new Date(2019, 2, 11, 13, 30), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 13:30 (Adicional 5%). Precio Base: 2800.', function() {
+            expect(newReserva1.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 13:30 (Adicional 5%). Precio Final: 2380.', function() {
+            expect(newReserva1.calcularPrecioFinal()).to.equal(2380);
+        });    
+
+        var newReserva2 = new Reserva(new Date(2019, 2, 11, 18, 00), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 18:00. Precio Base: 2800.', function() {
+            expect(newReserva2.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 18:00. Precio Final: 2520.', function() {
+            expect(newReserva2.calcularPrecioFinal()).to.equal(2520);
+        });
+
+        var newReserva3 = new Reserva(new Date(2019, 2, 11, 20, 30), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 20:30 (Adicional 5%). Devuelve: 2800.', function() {
+            expect(newReserva3.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 20:30 (Adicional 5%). Devuelve: 2380.', function() {
+            expect(newReserva3.calcularPrecioFinal()).to.equal(2380);
+        });  
+
+        var newReserva4 = new Reserva(new Date(2019, 2, 11, 23, 00), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 23:00. Devuelve: 2800.', function() {
+            expect(newReserva4.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Horario: 23:00. Devuelve: 2520.', function() {
+            expect(newReserva4.calcularPrecioFinal()).to.equal(2520);
+        });  
+    });
+
+    describe('Calcular Precio Base y Final. Dtos por grupos grandes (7 personas: 10% dto) mas Adicionales.', function() {
+        var newReserva1 = new Reserva(new Date(2019, 2, 11, 18, 00), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Lunes. Precio Base: 2800.', function() {
+            expect(newReserva1.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Lunes. Precio Final: 2520.', function() {
+            expect(newReserva1.calcularPrecioFinal()).to.equal(2520);
+        });    
+
+        var newReserva2 = new Reserva(new Date(2019, 2, 11, 18, 00), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Jueves. Precio Base: 2800.', function() {
+            expect(newReserva2.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Jueves. Precio Final: 2520.', function() {
+            expect(newReserva2.calcularPrecioFinal()).to.equal(2520);
+        });
+
+        var newReserva3 = new Reserva(new Date(2019, 2, 15, 18, 00), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Viernes (Adicional 10%). Devuelve: 2800.', function() {
+            expect(newReserva3.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Viernes (Adicional 10%). Devuelve: 2240.', function() {
+            expect(newReserva3.calcularPrecioFinal()).to.equal(2240);
+        });  
+
+        var newReserva4 = new Reserva(new Date(2019, 2, 17, 18, 00), 7, 400, null);
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Domingo (Adicional 10%). Devuelve: 2800.', function() {
+            expect(newReserva4.calcularPrecioBase()).to.equal(2800);
+        });
+        it('Cant de Personas: 7, Precio: 400. Dto: null. Dia: Domingo (Adicional 10%). Devuelve: 2240.', function() {
+            expect(newReserva4.calcularPrecioFinal()).to.equal(2240);
+        });  
     });
 });
-*/
